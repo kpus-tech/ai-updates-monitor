@@ -1,0 +1,662 @@
+# AI Updates Monitor - Sources Configuration
+# Version: 1
+#
+# Adapter types:
+# - rss: RSS feed polling
+# - atom: Atom feed polling  
+# - github_releases_atom: GitHub releases Atom polling
+# - html_articles: HTML page with article cards (extract title/link/date)
+# - html_changelog: HTML changelog (extract version headings/entries)
+
+version: 1
+sources:
+
+  # =========================
+  # OpenAI
+  # =========================
+  - id: openai_dev_changelog_rss
+    org: OpenAI
+    name: Developers Changelog (RSS)
+    adapter: rss
+    url: https://developers.openai.com/changelog/rss.xml
+    max_items: 10
+
+  - id: openai_news
+    org: OpenAI
+    name: News
+    adapter: html_articles
+    url: https://openai.com/news/
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "a[href*='/index/']"
+      title: "h3, span[class*='title']"
+      date: "time, [class*='date']"
+
+  - id: openai_research
+    org: OpenAI
+    name: Research
+    adapter: html_articles
+    url: https://openai.com/research/
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "a[href*='/research/']"
+      title: "h3, span[class*='title']"
+      date: "time, [class*='date']"
+
+  - id: openai_openai_python_releases
+    org: OpenAI
+    name: openai-python GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/openai/openai-python/releases.atom
+    max_items: 10
+
+  - id: openai_openai_node_releases
+    org: OpenAI
+    name: openai-node GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/openai/openai-node/releases.atom
+    max_items: 10
+
+  # =========================
+  # Anthropic
+  # =========================
+  - id: anthropic_newsroom
+    org: Anthropic
+    name: Newsroom
+    adapter: html_articles
+    url: https://www.anthropic.com/news
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "article, [class*='post'], [class*='card'], a[href*='/news/']"
+      title: "h2, h3, [class*='title']"
+      link: "a[href*='/news/']"
+      date: "time, [class*='date']"
+
+  - id: anthropic_platform_release_notes
+    org: Anthropic
+    name: Claude Developer Platform Release Notes
+    adapter: html_changelog
+    url: https://docs.anthropic.com/en/release-notes/overview
+    max_items: 10
+    selectors:
+      container: "main, article, [class*='content']"
+      entry: "section, [class*='release'], h2, h3"
+      version: "h2, h3"
+      date: "time, [class*='date']"
+
+  - id: anthropic_claude_code_changelog
+    org: Anthropic
+    name: Claude Code CHANGELOG (GitHub)
+    adapter: html_changelog
+    url: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
+    max_items: 10
+    selectors:
+      container: "article.markdown-body"
+      entry: "h2"
+      version: "h2"
+
+  - id: anthropic_sdk_python_releases
+    org: Anthropic
+    name: anthropic-sdk-python GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/anthropics/anthropic-sdk-python/releases.atom
+    max_items: 10
+
+  # =========================
+  # Google / DeepMind
+  # =========================
+  - id: google_keyword_ai_rss
+    org: Google
+    name: The Keyword — AI (RSS)
+    adapter: rss
+    url: https://blog.google/technology/ai/rss/
+    max_items: 10
+
+  - id: google_keyword_root_rss
+    org: Google
+    name: The Keyword — All (RSS)
+    adapter: rss
+    url: https://blog.google/rss/
+    max_items: 10
+
+  - id: google_keyword_deepmind
+    org: Google DeepMind
+    name: The Keyword — Google DeepMind (HTML)
+    adapter: html_articles
+    url: https://blog.google/technology/google-deepmind/
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "article, [class*='article'], [class*='card']"
+      title: "h2, h3, [class*='title']"
+      link: "a"
+      date: "time, [class*='date']"
+
+  - id: deepmind_home
+    org: Google DeepMind
+    name: DeepMind site (HTML)
+    adapter: html_articles
+    url: https://deepmind.google/
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "article, [class*='card'], [class*='post']"
+      title: "h2, h3, [class*='title']"
+      link: "a"
+      date: "time, [class*='date']"
+
+  - id: google_research_blog
+    org: Google Research
+    name: Google Research Blog (HTML)
+    adapter: html_articles
+    url: https://research.google/blog/
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "article, [class*='post'], [class*='card']"
+      title: "h2, h3, [class*='title']"
+      link: "a"
+      date: "time, [class*='date']"
+
+  - id: google_developers_blog
+    org: Google
+    name: Google Developers Blog (HTML)
+    adapter: html_articles
+    url: https://developers.googleblog.com/
+    max_items: 10
+    selectors:
+      container: ".blog-posts, main"
+      item: ".post, article"
+      title: ".post-title, h2, h3"
+      link: "a.post-title, a"
+      date: ".post-date, time, [class*='date']"
+
+  # =========================
+  # Microsoft
+  # =========================
+  - id: microsoft_foundry_feed
+    org: Microsoft
+    name: Microsoft Foundry Blog (RSS)
+    adapter: rss
+    url: https://devblogs.microsoft.com/foundry/feed/
+    max_items: 10
+
+  - id: microsoft_foundry_blog
+    org: Microsoft
+    name: Microsoft Foundry Blog (HTML)
+    adapter: html_articles
+    url: https://devblogs.microsoft.com/foundry/
+    max_items: 10
+    selectors:
+      container: "main, .posts-list"
+      item: "article, .post-item, [class*='entry']"
+      title: "h2, h3, .entry-title"
+      link: "a"
+      date: "time, .entry-date, [class*='date']"
+
+  - id: microsoft_research_blog
+    org: Microsoft Research
+    name: Microsoft Research Blog (HTML)
+    adapter: html_articles
+    url: https://www.microsoft.com/en-us/research/blog/
+    max_items: 10
+    selectors:
+      container: "main, .card-grid"
+      item: "article, .card, [class*='post']"
+      title: "h2, h3, .card-title, [class*='title']"
+      link: "a"
+      date: "time, [class*='date']"
+
+  - id: microsoft_techcommunity_foundry
+    org: Microsoft
+    name: TechCommunity — Microsoft Foundry Blog (HTML)
+    adapter: html_articles
+    url: https://techcommunity.microsoft.com/category/azure-ai-foundry/blog/azure-ai-foundry-blog/
+    max_items: 10
+    selectors:
+      container: "main, [class*='message-list']"
+      item: "[class*='message'], article, [class*='post']"
+      title: "h2, h3, [class*='title']"
+      link: "a[href*='/blog/']"
+      date: "time, [class*='date']"
+
+  # =========================
+  # Meta
+  # =========================
+  - id: meta_ai_blog
+    org: Meta
+    name: Meta AI Blog
+    adapter: html_articles
+    url: https://ai.meta.com/blog/
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "article, [class*='card'], [class*='post']"
+      title: "h2, h3, [class*='title']"
+      link: "a[href*='/blog/']"
+      date: "time, [class*='date']"
+
+  - id: meta_ai_research
+    org: Meta
+    name: Meta AI Research
+    adapter: html_articles
+    url: https://ai.meta.com/research/
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "article, [class*='card'], [class*='post']"
+      title: "h2, h3, [class*='title']"
+      link: "a[href*='/research/']"
+      date: "time, [class*='date']"
+
+  - id: meta_llama
+    org: Meta
+    name: Llama (Meta AI)
+    adapter: html_articles
+    url: https://ai.meta.com/llama/
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "article, [class*='card'], section"
+      title: "h2, h3, [class*='title']"
+      link: "a"
+      date: "time, [class*='date']"
+
+  # =========================
+  # Amazon / AWS
+  # =========================
+  - id: aws_ml_blog
+    org: AWS
+    name: AWS Machine Learning Blog (HTML)
+    adapter: html_articles
+    url: https://aws.amazon.com/blogs/machine-learning/
+    max_items: 10
+    selectors:
+      container: "main, .blog-posts"
+      item: "article, .blog-post, [class*='post']"
+      title: "h2, h3, .blog-post-title"
+      link: "a[href*='/blogs/']"
+      date: "time, [class*='date']"
+
+  - id: aws_ml_blog_feed
+    org: AWS
+    name: AWS Machine Learning Blog (RSS)
+    adapter: rss
+    url: https://aws.amazon.com/blogs/machine-learning/feed/
+    max_items: 10
+
+  - id: amazon_science_blog
+    org: Amazon
+    name: Amazon Science Blog
+    adapter: html_articles
+    url: https://www.amazon.science/blog
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "article, [class*='card'], [class*='post']"
+      title: "h2, h3, [class*='title']"
+      link: "a[href*='/blog/']"
+      date: "time, [class*='date']"
+
+  # =========================
+  # Apple
+  # =========================
+  - id: apple_ml_research
+    org: Apple
+    name: Apple Machine Learning Research
+    adapter: html_articles
+    url: https://machinelearning.apple.com/
+    max_items: 10
+    selectors:
+      container: "main, .research-list"
+      item: "article, [class*='research'], [class*='post'], [class*='card']"
+      title: "h2, h3, [class*='title']"
+      link: "a[href*='/research/']"
+      date: "time, [class*='date']"
+
+  # =========================
+  # NVIDIA
+  # =========================
+  - id: nvidia_dev_blog_rss
+    org: NVIDIA
+    name: NVIDIA Developer Blog (RSS)
+    adapter: rss
+    url: https://developer.nvidia.com/blog/feed/
+    max_items: 10
+
+  - id: nvidia_dev_blog
+    org: NVIDIA
+    name: NVIDIA Developer Blog (HTML)
+    adapter: html_articles
+    url: https://developer.nvidia.com/blog/
+    max_items: 10
+    selectors:
+      container: "main, .posts-list"
+      item: "article, .post, [class*='card']"
+      title: "h2, h3, .post-title, [class*='title']"
+      link: "a[href*='/blog/']"
+      date: "time, [class*='date']"
+
+  # =========================
+  # xAI
+  # =========================
+  - id: xai_news
+    org: xAI
+    name: xAI News
+    adapter: html_articles
+    url: https://x.ai/news
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "article, [class*='post'], [class*='card']"
+      title: "h2, h3, [class*='title']"
+      link: "a[href*='/news/']"
+      date: "time, [class*='date']"
+
+  # =========================
+  # Mistral
+  # =========================
+  - id: mistral_news
+    org: Mistral AI
+    name: Mistral News
+    adapter: html_articles
+    url: https://mistral.ai/news
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "article, [class*='post'], [class*='card']"
+      title: "h2, h3, [class*='title']"
+      link: "a[href*='/news/']"
+      date: "time, [class*='date']"
+
+  - id: mistral_docs_changelog
+    org: Mistral AI
+    name: Mistral Docs — Changelog
+    adapter: html_changelog
+    url: https://docs.mistral.ai/getting-started/changelog
+    max_items: 10
+    selectors:
+      container: "main, article, .content"
+      entry: "section, h2, h3"
+      version: "h2, h3"
+      date: "time, [class*='date']"
+
+  - id: mistral_sdk_releases
+    org: Mistral AI
+    name: mistralai/mistral-common GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/mistralai/mistral-common/releases.atom
+    max_items: 10
+
+  # =========================
+  # Cohere
+  # =========================
+  - id: cohere_changelog
+    org: Cohere
+    name: Cohere Docs — Changelog
+    adapter: html_changelog
+    url: https://docs.cohere.com/changelog
+    max_items: 10
+    selectors:
+      container: "main, article, .content"
+      entry: "section, [class*='release'], h2, h3"
+      version: "h2, h3, [class*='version']"
+      date: "time, [class*='date']"
+
+  - id: cohere_blog
+    org: Cohere
+    name: Cohere Blog
+    adapter: html_articles
+    url: https://cohere.com/blog
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "article, [class*='post'], [class*='card']"
+      title: "h2, h3, [class*='title']"
+      link: "a[href*='/blog/']"
+      date: "time, [class*='date']"
+
+  # =========================
+  # Hugging Face
+  # =========================
+  - id: huggingface_blog_feed
+    org: Hugging Face
+    name: Hugging Face Blog (RSS/Atom)
+    adapter: rss
+    url: https://huggingface.co/blog/feed.xml
+    max_items: 10
+
+  - id: huggingface_blog
+    org: Hugging Face
+    name: Hugging Face Blog (HTML)
+    adapter: html_articles
+    url: https://huggingface.co/blog
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "article, [class*='post'], a[href*='/blog/']"
+      title: "h2, h3, [class*='title']"
+      link: "a[href*='/blog/']"
+      date: "time, [class*='date']"
+
+  - id: hf_transformers_releases
+    org: Hugging Face
+    name: transformers GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/huggingface/transformers/releases.atom
+    max_items: 10
+
+  - id: hf_diffusers_releases
+    org: Hugging Face
+    name: diffusers GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/huggingface/diffusers/releases.atom
+    max_items: 10
+
+  # =========================
+  # Cursor (Dev Tooling)
+  # =========================
+  - id: cursor_blog_atom
+    org: Cursor
+    name: Cursor Blog (Atom)
+    adapter: atom
+    url: https://cursor.sh/atom.xml
+    max_items: 10
+
+  - id: cursor_blog_rss
+    org: Cursor
+    name: Cursor Blog (RSS)
+    adapter: rss
+    url: https://cursor.sh/rss.xml
+    max_items: 10
+
+  - id: cursor_blog
+    org: Cursor
+    name: Cursor Blog (HTML)
+    adapter: html_articles
+    url: https://cursor.com/blog
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "article, [class*='post'], [class*='card']"
+      title: "h2, h3, [class*='title']"
+      link: "a[href*='/blog/']"
+      date: "time, [class*='date']"
+
+  # =========================
+  # Other major AI dev platforms / tooling
+  # =========================
+  - id: langchain_blog
+    org: LangChain
+    name: LangChain Blog
+    adapter: html_articles
+    url: https://blog.langchain.dev/
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "article, [class*='post'], [class*='card']"
+      title: "h2, h3, [class*='title']"
+      link: "a"
+      date: "time, [class*='date']"
+
+  - id: langchain_releases
+    org: LangChain
+    name: langchain GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/langchain-ai/langchain/releases.atom
+    max_items: 10
+
+  - id: llamaindex_blog
+    org: LlamaIndex
+    name: LlamaIndex Blog
+    adapter: html_articles
+    url: https://www.llamaindex.ai/blog
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "article, [class*='post'], [class*='card']"
+      title: "h2, h3, [class*='title']"
+      link: "a[href*='/blog/']"
+      date: "time, [class*='date']"
+
+  - id: llamaindex_releases
+    org: LlamaIndex
+    name: llama_index GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/run-llama/llama_index/releases.atom
+    max_items: 10
+
+  - id: wandb_blog
+    org: Weights & Biases
+    name: Fully Connected (W&B Blog)
+    adapter: html_articles
+    url: https://wandb.ai/fully-connected
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "article, [class*='post'], [class*='card']"
+      title: "h2, h3, [class*='title']"
+      link: "a"
+      date: "time, [class*='date']"
+
+  - id: vllm_releases
+    org: vLLM
+    name: vLLM GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/vllm-project/vllm/releases.atom
+    max_items: 10
+
+  - id: llama_cpp_releases
+    org: llama.cpp
+    name: llama.cpp GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/ggerganov/llama.cpp/releases.atom
+    max_items: 10
+
+  - id: pytorch_releases
+    org: PyTorch
+    name: pytorch/pytorch GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/pytorch/pytorch/releases.atom
+    max_items: 10
+
+  - id: tensorflow_releases
+    org: TensorFlow
+    name: tensorflow/tensorflow GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/tensorflow/tensorflow/releases.atom
+    max_items: 10
+
+  - id: jax_releases
+    org: JAX
+    name: google/jax GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/google/jax/releases.atom
+    max_items: 10
+
+  # =========================
+  # Vector DB / RAG infra (first-party)
+  # =========================
+  - id: pinecone_blog
+    org: Pinecone
+    name: Pinecone Blog
+    adapter: html_articles
+    url: https://www.pinecone.io/blog/
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "article, [class*='post'], [class*='card']"
+      title: "h2, h3, [class*='title']"
+      link: "a[href*='/blog/']"
+      date: "time, [class*='date']"
+
+  - id: weaviate_blog
+    org: Weaviate
+    name: Weaviate Blog
+    adapter: html_articles
+    url: https://weaviate.io/blog
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "article, [class*='post'], [class*='card']"
+      title: "h2, h3, [class*='title']"
+      link: "a[href*='/blog/']"
+      date: "time, [class*='date']"
+
+  - id: milvus_blog
+    org: Milvus
+    name: Milvus Blog
+    adapter: html_articles
+    url: https://milvus.io/blog
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "article, [class*='post'], [class*='card']"
+      title: "h2, h3, [class*='title']"
+      link: "a[href*='/blog/']"
+      date: "time, [class*='date']"
+
+  - id: opensearch_blog
+    org: OpenSearch
+    name: OpenSearch Blog
+    adapter: html_articles
+    url: https://opensearch.org/blog/
+    max_items: 10
+    selectors:
+      container: "main, .posts"
+      item: "article, .post, [class*='card']"
+      title: "h2, h3, .post-title, [class*='title']"
+      link: "a"
+      date: "time, .post-date, [class*='date']"
+
+  # =========================
+  # Cloud / edge AI platform updates (first-party)
+  # =========================
+  - id: cloudflare_blog_workers_ai
+    org: Cloudflare
+    name: Cloudflare Blog (Workers AI tag)
+    adapter: html_articles
+    url: https://blog.cloudflare.com/tag/workers-ai/
+    max_items: 10
+    selectors:
+      container: "main, .posts-list"
+      item: "article, .post, [class*='card']"
+      title: "h2, h3, [class*='title']"
+      link: "a"
+      date: "time, [class*='date']"
+
+  - id: vercel_ai_blog
+    org: Vercel
+    name: Vercel Blog (AI)
+    adapter: html_articles
+    url: https://vercel.com/blog/tags/ai
+    max_items: 10
+    selectors:
+      container: "main"
+      item: "article, [class*='post'], [class*='card']"
+      title: "h2, h3, [class*='title']"
+      link: "a[href*='/blog/']"
+      date: "time, [class*='date']"

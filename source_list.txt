@@ -1,0 +1,400 @@
+# sources.yaml
+# Adapter types your coding agent should implement:
+# - rss: RSS feed polling
+# - atom: Atom feed polling
+# - github_releases_atom: GitHub releases Atom polling
+# - html_articles: HTML page with article cards (extract title/link/date; hash list)
+# - html_changelog: HTML changelog (extract headings/entries; hash)
+
+version: 1
+sources:
+
+  # =========================
+  # OpenAI
+  # =========================
+  - id: openai_dev_changelog_rss
+    org: OpenAI
+    name: Developers Changelog (RSS)
+    adapter: rss
+    url: https://developers.openai.com/changelog/rss.xml
+
+  - id: openai_news
+    org: OpenAI
+    name: News
+    adapter: html_articles
+    url: https://openai.com/news/
+
+  - id: openai_research
+    org: OpenAI
+    name: Research
+    adapter: html_articles
+    url: https://openai.com/research/
+
+  - id: openai_openai_python_releases
+    org: OpenAI
+    name: openai-python GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/openai/openai-python/releases.atom
+
+  - id: openai_openai_node_releases
+    org: OpenAI
+    name: openai-node GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/openai/openai-node/releases.atom
+
+  # =========================
+  # Anthropic
+  # =========================
+  - id: anthropic_newsroom
+    org: Anthropic
+    name: Newsroom
+    adapter: html_articles
+    url: https://www.anthropic.com/news
+
+  - id: anthropic_platform_release_notes
+    org: Anthropic
+    name: Claude Developer Platform Release Notes
+    adapter: html_changelog
+    url: https://platform.claude.com/docs/en/release-notes/overview
+
+  - id: anthropic_claude_code_changelog
+    org: Anthropic
+    name: Claude Code CHANGELOG (GitHub)
+    adapter: html_changelog
+    url: https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md
+
+  - id: anthropic_sdk_python_releases
+    org: Anthropic
+    name: anthropic-sdk-python GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/anthropics/anthropic-sdk-python/releases.atom
+
+  # =========================
+  # Google / DeepMind
+  # =========================
+  - id: google_keyword_ai_rss
+    org: Google
+    name: The Keyword — AI (RSS)
+    adapter: rss
+    url: https://blog.google/technology/ai/rss/
+
+  - id: google_keyword_root_rss
+    org: Google
+    name: The Keyword — All (RSS)
+    adapter: rss
+    url: https://blog.google/rss/
+
+  - id: google_keyword_deepmind
+    org: Google DeepMind
+    name: The Keyword — Google DeepMind (HTML)
+    adapter: html_articles
+    url: https://blog.google/technology/google-deepmind/
+
+  - id: deepmind_home
+    org: Google DeepMind
+    name: DeepMind site (HTML)
+    adapter: html_articles
+    url: https://deepmind.google/
+
+  - id: google_research_blog
+    org: Google Research
+    name: Google Research Blog (HTML)
+    adapter: html_articles
+    url: https://research.google/blog/
+
+  - id: google_developers_blog
+    org: Google
+    name: Google Developers Blog (HTML)
+    adapter: html_articles
+    url: https://developers.googleblog.com/
+
+  # =========================
+  # Microsoft
+  # =========================
+  - id: microsoft_foundry_feed
+    org: Microsoft
+    name: Microsoft Foundry Blog (RSS)
+    adapter: rss
+    url: https://devblogs.microsoft.com/foundry/feed/
+
+  - id: microsoft_foundry_blog
+    org: Microsoft
+    name: Microsoft Foundry Blog (HTML)
+    adapter: html_articles
+    url: https://devblogs.microsoft.com/foundry/
+
+  - id: microsoft_research_blog
+    org: Microsoft Research
+    name: Microsoft Research Blog (HTML)
+    adapter: html_articles
+    url: https://www.microsoft.com/en-us/research/blog/
+
+  - id: microsoft_techcommunity_foundry
+    org: Microsoft
+    name: TechCommunity — Microsoft Foundry Blog (HTML)
+    adapter: html_articles
+    url: https://techcommunity.microsoft.com/category/azure-ai-foundry/blog/azure-ai-foundry-blog/
+
+  # =========================
+  # Meta
+  # =========================
+  - id: meta_ai_blog
+    org: Meta
+    name: Meta AI Blog
+    adapter: html_articles
+    url: https://ai.meta.com/blog/
+
+  - id: meta_ai_research
+    org: Meta
+    name: Meta AI Research
+    adapter: html_articles
+    url: https://ai.meta.com/research/
+
+  - id: meta_llama
+    org: Meta
+    name: Llama (Meta AI)
+    adapter: html_articles
+    url: https://ai.meta.com/llama/
+
+  # =========================
+  # Amazon / AWS
+  # =========================
+  - id: aws_ml_blog
+    org: AWS
+    name: AWS Machine Learning Blog (HTML)
+    adapter: html_articles
+    url: https://aws.amazon.com/blogs/machine-learning/
+
+  - id: aws_ml_blog_feed
+    org: AWS
+    name: AWS Machine Learning Blog (RSS)
+    adapter: rss
+    url: https://aws.amazon.com/blogs/machine-learning/feed/
+
+  - id: amazon_science_blog
+    org: Amazon
+    name: Amazon Science Blog
+    adapter: html_articles
+    url: https://www.amazon.science/blog
+
+  # =========================
+  # Apple
+  # =========================
+  - id: apple_ml_research
+    org: Apple
+    name: Apple Machine Learning Research
+    adapter: html_articles
+    url: https://machinelearning.apple.com/
+
+  # =========================
+  # NVIDIA
+  # =========================
+  - id: nvidia_dev_blog_rss
+    org: NVIDIA
+    name: NVIDIA Developer Blog (RSS)
+    adapter: rss
+    url: https://developer.nvidia.com/blog/rss
+
+  - id: nvidia_dev_blog
+    org: NVIDIA
+    name: NVIDIA Developer Blog (HTML)
+    adapter: html_articles
+    url: https://developer.nvidia.com/blog/
+
+  # =========================
+  # xAI
+  # =========================
+  - id: xai_news
+    org: xAI
+    name: xAI News
+    adapter: html_articles
+    url: https://x.ai/news
+
+  # =========================
+  # Mistral
+  # =========================
+  - id: mistral_news
+    org: Mistral AI
+    name: Mistral News
+    adapter: html_articles
+    url: https://mistral.ai/news
+
+  - id: mistral_docs_changelog
+    org: Mistral AI
+    name: Mistral Docs — Changelog
+    adapter: html_changelog
+    url: https://docs.mistral.ai/getting-started/changelog
+
+  - id: mistral_sdk_releases
+    org: Mistral AI
+    name: mistralai/mistral-common GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/mistralai/mistral-common/releases.atom
+
+  # =========================
+  # Cohere
+  # =========================
+  - id: cohere_changelog
+    org: Cohere
+    name: Cohere Docs — Changelog
+    adapter: html_changelog
+    url: https://docs.cohere.com/changelog
+
+  - id: cohere_blog
+    org: Cohere
+    name: Cohere Blog
+    adapter: html_articles
+    url: https://cohere.com/blog
+
+  # =========================
+  # Hugging Face
+  # =========================
+  - id: huggingface_blog_feed
+    org: Hugging Face
+    name: Hugging Face Blog (RSS/Atom)
+    adapter: rss
+    url: https://huggingface.co/blog/feed.xml
+
+  - id: huggingface_blog
+    org: Hugging Face
+    name: Hugging Face Blog (HTML)
+    adapter: html_articles
+    url: https://huggingface.co/blog
+
+  - id: hf_transformers_releases
+    org: Hugging Face
+    name: transformers GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/huggingface/transformers/releases.atom
+
+  - id: hf_diffusers_releases
+    org: Hugging Face
+    name: diffusers GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/huggingface/diffusers/releases.atom
+
+  # =========================
+  # Cursor (Dev Tooling)
+  # =========================
+  - id: cursor_blog_atom
+    org: Cursor
+    name: Cursor Blog (Atom)
+    adapter: atom
+    url: https://cursor.sh/atom.xml
+
+  - id: cursor_blog_rss
+    org: Cursor
+    name: Cursor Blog (RSS)
+    adapter: rss
+    url: https://cursor.sh/rss.xml
+
+  - id: cursor_blog
+    org: Cursor
+    name: Cursor Blog (HTML)
+    adapter: html_articles
+    url: https://cursor.com/blog
+
+  # =========================
+  # Other major AI dev platforms / tooling
+  # =========================
+  - id: langchain_blog
+    org: LangChain
+    name: LangChain Blog
+    adapter: html_articles
+    url: https://blog.langchain.com/
+
+  - id: langchain_releases
+    org: LangChain
+    name: langchain GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/langchain-ai/langchain/releases.atom
+
+  - id: llamaindex_blog
+    org: LlamaIndex
+    name: LlamaIndex Blog
+    adapter: html_articles
+    url: https://www.llamaindex.ai/blog
+
+  - id: llamaindex_releases
+    org: LlamaIndex
+    name: llama_index GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/run-llama/llama_index/releases.atom
+
+  - id: wandb_blog
+    org: Weights & Biases
+    name: Fully Connected (W&B Blog)
+    adapter: html_articles
+    url: https://wandb.ai/fully-connected
+
+  - id: vllm_releases
+    org: vLLM
+    name: vLLM GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/vllm-project/vllm/releases.atom
+
+  - id: llama_cpp_releases
+    org: llama.cpp
+    name: llama.cpp GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/ggerganov/llama.cpp/releases.atom
+
+  - id: pytorch_releases
+    org: PyTorch
+    name: pytorch/pytorch GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/pytorch/pytorch/releases.atom
+
+  - id: tensorflow_releases
+    org: TensorFlow
+    name: tensorflow/tensorflow GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/tensorflow/tensorflow/releases.atom
+
+  - id: jax_releases
+    org: JAX
+    name: google/jax GitHub Releases (Atom)
+    adapter: github_releases_atom
+    url: https://github.com/google/jax/releases.atom
+
+  # =========================
+  # Vector DB / RAG infra (first-party)
+  # =========================
+  - id: pinecone_blog
+    org: Pinecone
+    name: Pinecone Blog
+    adapter: html_articles
+    url: https://www.pinecone.io/blog/
+
+  - id: weaviate_blog
+    org: Weaviate
+    name: Weaviate Blog
+    adapter: html_articles
+    url: https://weaviate.io/blog
+
+  - id: milvus_blog
+    org: Milvus
+    name: Milvus Blog
+    adapter: html_articles
+    url: https://milvus.io/blog
+
+  - id: opensearch_blog
+    org: OpenSearch
+    name: OpenSearch Blog
+    adapter: html_articles
+    url: https://opensearch.org/blog/
+
+  # =========================
+  # Cloud / edge AI platform updates (first-party)
+  # =========================
+  - id: cloudflare_blog_workers_ai
+    org: Cloudflare
+    name: Cloudflare Blog (Workers AI tag)
+    adapter: html_articles
+    url: https://blog.cloudflare.com/tag/workers-ai/
+
+  - id: vercel_ai_blog
+    org: Vercel
+    name: Vercel Blog (AI)
+    adapter: html_articles
+    url: https://vercel.com/blog/tags/ai
