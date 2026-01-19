@@ -1,14 +1,39 @@
 # AI Updates Monitor - Sources Configuration
-# Version: 1
+# Version: 2
 #
 # Adapter types:
 # - rss: RSS feed polling
 # - atom: Atom feed polling  
-# - github_releases_atom: GitHub releases Atom polling
 # - html_articles: HTML page with article cards (extract title/link/date)
 # - html_changelog: HTML changelog (extract version headings/entries)
+#
+# =========================
+# REMOVED SOURCES (2026-01-20)
+# =========================
+# The following github_releases_atom sources were removed as they were
+# adding noise without significant value. Re-enable if needed in future.
+#
+# | ID                             | Org           | URL                                                          |
+# |--------------------------------|---------------|--------------------------------------------------------------|
+# | openai_openai_python_releases  | OpenAI        | https://github.com/openai/openai-python/releases.atom        |
+# | openai_openai_node_releases    | OpenAI        | https://github.com/openai/openai-node/releases.atom          |
+# | anthropic_sdk_python_releases  | Anthropic     | https://github.com/anthropics/anthropic-sdk-python/releases.atom |
+# | mistral_sdk_releases           | Mistral AI    | https://github.com/mistralai/mistral-common/releases.atom    |
+# | hf_transformers_releases       | Hugging Face  | https://github.com/huggingface/transformers/releases.atom    |
+# | hf_diffusers_releases          | Hugging Face  | https://github.com/huggingface/diffusers/releases.atom       |
+# | langchain_releases             | LangChain     | https://github.com/langchain-ai/langchain/releases.atom      |
+# | llamaindex_releases            | LlamaIndex    | https://github.com/run-llama/llama_index/releases.atom       |
+# | vllm_releases                  | vLLM          | https://github.com/vllm-project/vllm/releases.atom           |
+# | llama_cpp_releases             | llama.cpp     | https://github.com/ggerganov/llama.cpp/releases.atom         |
+# | pytorch_releases               | PyTorch       | https://github.com/pytorch/pytorch/releases.atom             |
+# | tensorflow_releases            | TensorFlow    | https://github.com/tensorflow/tensorflow/releases.atom       |
+# | jax_releases                   | JAX           | https://github.com/google/jax/releases.atom                  |
+#
+# Note: vLLM, llama.cpp, PyTorch, TensorFlow, and JAX have NO other sources
+# in this config. If coverage for these projects is needed, consider re-adding
+# their github_releases_atom entries or finding alternative news sources.
 
-version: 1
+version: 2
 sources:
 
   # =========================
@@ -44,20 +69,6 @@ sources:
       item: "a[href*='/research/']"
       title: "h3, span[class*='title']"
       date: "time, [class*='date']"
-
-  - id: openai_openai_python_releases
-    org: OpenAI
-    name: openai-python GitHub Releases (Atom)
-    adapter: github_releases_atom
-    url: https://github.com/openai/openai-python/releases.atom
-    max_items: 10
-
-  - id: openai_openai_node_releases
-    org: OpenAI
-    name: openai-node GitHub Releases (Atom)
-    adapter: github_releases_atom
-    url: https://github.com/openai/openai-node/releases.atom
-    max_items: 10
 
   # =========================
   # Anthropic
@@ -97,13 +108,6 @@ sources:
       container: "article.markdown-body"
       entry: "h2"
       version: "h2"
-
-  - id: anthropic_sdk_python_releases
-    org: Anthropic
-    name: anthropic-sdk-python GitHub Releases (Atom)
-    adapter: github_releases_atom
-    url: https://github.com/anthropics/anthropic-sdk-python/releases.atom
-    max_items: 10
 
   # =========================
   # Google / DeepMind
@@ -384,13 +388,6 @@ sources:
       version: "h2, h3"
       date: "time, [class*='date']"
 
-  - id: mistral_sdk_releases
-    org: Mistral AI
-    name: mistralai/mistral-common GitHub Releases (Atom)
-    adapter: github_releases_atom
-    url: https://github.com/mistralai/mistral-common/releases.atom
-    max_items: 10
-
   # =========================
   # Cohere
   # =========================
@@ -442,20 +439,6 @@ sources:
       link: "a[href*='/blog/']"
       date: "time, [class*='date']"
 
-  - id: hf_transformers_releases
-    org: Hugging Face
-    name: transformers GitHub Releases (Atom)
-    adapter: github_releases_atom
-    url: https://github.com/huggingface/transformers/releases.atom
-    max_items: 10
-
-  - id: hf_diffusers_releases
-    org: Hugging Face
-    name: diffusers GitHub Releases (Atom)
-    adapter: github_releases_atom
-    url: https://github.com/huggingface/diffusers/releases.atom
-    max_items: 10
-
   # =========================
   # Cursor (Dev Tooling)
   # =========================
@@ -502,13 +485,6 @@ sources:
       link: "a"
       date: "time, [class*='date']"
 
-  - id: langchain_releases
-    org: LangChain
-    name: langchain GitHub Releases (Atom)
-    adapter: github_releases_atom
-    url: https://github.com/langchain-ai/langchain/releases.atom
-    max_items: 10
-
   - id: llamaindex_blog
     org: LlamaIndex
     name: LlamaIndex Blog
@@ -522,13 +498,6 @@ sources:
       link: "a[href*='/blog/']"
       date: "time, [class*='date']"
 
-  - id: llamaindex_releases
-    org: LlamaIndex
-    name: llama_index GitHub Releases (Atom)
-    adapter: github_releases_atom
-    url: https://github.com/run-llama/llama_index/releases.atom
-    max_items: 10
-
   - id: wandb_blog
     org: Weights & Biases
     name: Fully Connected (W&B Blog)
@@ -541,41 +510,6 @@ sources:
       title: "h2, h3, [class*='title']"
       link: "a"
       date: "time, [class*='date']"
-
-  - id: vllm_releases
-    org: vLLM
-    name: vLLM GitHub Releases (Atom)
-    adapter: github_releases_atom
-    url: https://github.com/vllm-project/vllm/releases.atom
-    max_items: 10
-
-  - id: llama_cpp_releases
-    org: llama.cpp
-    name: llama.cpp GitHub Releases (Atom)
-    adapter: github_releases_atom
-    url: https://github.com/ggerganov/llama.cpp/releases.atom
-    max_items: 10
-
-  - id: pytorch_releases
-    org: PyTorch
-    name: pytorch/pytorch GitHub Releases (Atom)
-    adapter: github_releases_atom
-    url: https://github.com/pytorch/pytorch/releases.atom
-    max_items: 10
-
-  - id: tensorflow_releases
-    org: TensorFlow
-    name: tensorflow/tensorflow GitHub Releases (Atom)
-    adapter: github_releases_atom
-    url: https://github.com/tensorflow/tensorflow/releases.atom
-    max_items: 10
-
-  - id: jax_releases
-    org: JAX
-    name: google/jax GitHub Releases (Atom)
-    adapter: github_releases_atom
-    url: https://github.com/google/jax/releases.atom
-    max_items: 10
 
   # =========================
   # Vector DB / RAG infra (first-party)
